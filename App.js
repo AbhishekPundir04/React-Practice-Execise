@@ -1,37 +1,29 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
+import { useState, createContext } from "react";
+import Home from "./ContextExample/Home";
+import ContactUs from "./ContextExample/ContactUs";
+import Profile from "./ContextExample/Profile";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Navbar from "./ContextExample/Navbar";
 
 
-import Home from "./ReactRouters/Home"
-import Profile from "./ReactRouters/Profile"
-import Contact from "./ReactRouters/ContactUs"
-import Navbar from "./ReactRouters/Navbar"
-import { useState } from "react"
+export const AppContext = createContext();
+function App() {
+  const [name, setName] = useState("Abhishek Pundir");
 
-const App = (props) =>{
-  const [userName, setUserName] = useState("Abhi") 
-  
   return (
-    
-    <div className="App-header">
-
-      <Router>
-        <div>
-         <Navbar/>
-        </div>
-        <Routes>
-          <Route path="/" element={<Home userName = {userName}/>}/>
-          <Route path="/menu" element={<Profile  userName = {userName} setUserName = {setUserName}  />}/>
-          <Route path="/contactus" element={<Contact/>}/>
-          <Route path="*" element={<h1>Page is not found</h1>}/>
-        </Routes>
-      </Router>
-
-
+    <div>
+      <AppContext.Provider value={{ name, setName }}>
+        <Router>
+          <Navbar />
+          <Routes>
+            <Route path="/Home" element={<Home />} />
+            <Route path="/ContactUs" element={<ContactUs />} />
+            <Route path="/Profile" element={<Profile />} />
+          </Routes>
+        </Router>
+      </AppContext.Provider>
     </div>
-  )
+  );
 }
 
-export default App
-
-
-
+export default App;
